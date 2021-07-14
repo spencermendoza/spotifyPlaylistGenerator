@@ -88,6 +88,8 @@ app.post('/newplaylist', async function(req, res) {
   console.log('newPlaylist: ', newPlaylist)
 });
 
+app.get('/', function(req, res) {res.send('Hello from Express!')});
+
 
 
 
@@ -96,4 +98,4 @@ app.post('/newplaylist', async function(req, res) {
 
 
 console.log('listening on port 8888');
-app.listen(8888);
+app.listen(process.env.PORT || 8888);
