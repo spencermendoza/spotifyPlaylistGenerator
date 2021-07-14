@@ -2,10 +2,10 @@ require('dotenv').config();
 var querystring = require('querystring');
 const axios = require('axios');
 const { response } = require('express');var request = require('request');
-var rp = require('request-promise');
+// var rp = require('request-promise');
 const cors = require('cors');
 var cookieParser = require('cookie-parser');
-const { get } = require('request-promise');
+// const { get } = require('request-promise');
 
 const client_id = '56cba1007de442ce9f5b05ffc57b1d96'; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your secret
