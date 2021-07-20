@@ -18,6 +18,10 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+}
 // app.use(express.static('build'));
 
   // Add headers
@@ -88,10 +92,6 @@ app.post('/newplaylist', async function(req, res) {
   let newPlaylist = await apiRequests.addToPlaylist(apiAuth.showToken(), answer.id, trackList);
   console.log('newPlaylist: ', newPlaylist)
 });
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
-}
 
 // app.get('/', (req, res) => {res.send('Hello from Express!')});
 
