@@ -45,9 +45,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+// app.get('*', function(req, res) {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// })
 
 app.get('/login', function(req, res) {
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
