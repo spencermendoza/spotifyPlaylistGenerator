@@ -20,9 +20,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('build'));
+// }
 // app.use(express.static('build'));
 
   // Add headers
