@@ -18,7 +18,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('../build'));
+app.use(express.static('build'));
 
   // Add headers
 app.use(function (req, res, next) {
