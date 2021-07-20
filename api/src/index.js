@@ -4,7 +4,7 @@ const cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// const path = require('path');
+const path = require('path');
 
 //handles only the authentication and holds tokens
 var apiAuth = require('./apiAuthentication');
