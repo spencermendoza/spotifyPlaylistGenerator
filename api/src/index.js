@@ -46,7 +46,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('*', function(req, res) {
-  response.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 })
 
 app.get('/login', function(req, res) {
