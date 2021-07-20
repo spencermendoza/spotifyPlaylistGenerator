@@ -98,7 +98,7 @@ app.post('/newplaylist', async function(req, res) {
   console.log('newPlaylist: ', newPlaylist)
 });
 
-// app.get('/', (req, res) => {res.send('Hello from Express!')});
+app.get('/', (req, res) => {res.send('Hello from Express!')});
 
 
 
