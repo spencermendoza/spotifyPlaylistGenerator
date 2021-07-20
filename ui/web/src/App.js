@@ -19,7 +19,7 @@ class App extends Component {
         async function getURL() {
             const loginResponse = await axios({
                 method: 'get',
-                url: '../../../api/src',
+                url: '../../../api/src/login',
                 withCredentials: true,
             });
 
