@@ -1,4 +1,4 @@
-import React, {  useContext, useState } from 'react';
+import React, {  useContext } from 'react';
 import '../../../App.css';
 import { LibraryContext } from '../../Context/LibraryContext';
 import { LibraryList } from '../..';
@@ -6,7 +6,7 @@ import { LibraryList } from '../..';
 const Library = () => {
 
     const { artistLibrary } = useContext(LibraryContext);
-    const [display, setDisplay] = useState('list');
+    // const [display, setDisplay] = useState('list');
 
 
     //Checks if there are items in library in state, if there is shows number of tracks in library

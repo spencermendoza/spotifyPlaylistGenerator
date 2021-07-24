@@ -7,7 +7,7 @@ const CreateButtons = (props) => {
     let {
         createOption,
         selectedList,
-        trackList,
+        // trackList,
         setCreateOption,
         setSelectedList,
         setArtistList,
@@ -16,7 +16,7 @@ const CreateButtons = (props) => {
         associateArtists,
         findArtistsByGenre,
         pullTracksFromArtists,
-        beginCreateStage,
+        // beginCreateStage,
         goBack,
     } = useContext(CreateContext);
 
