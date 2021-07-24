@@ -9,7 +9,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            url: 'none',
+            url: undefined,
             loggedIn: false,
         };
     }
@@ -19,7 +19,7 @@ class App extends Component {
         async function getURL() {
             const loginResponse = await axios({
                 method: 'get',
-                url: '../../../api/src/login',
+                url: 'http://localhost:8888/login',
                 withCredentials: true,
             });
 
@@ -33,13 +33,14 @@ class App extends Component {
     }
 
     changeLogin = () => {
+        console.log('changing login state now')
         this.setState({
             loggedIn: true,
         });
     }
 
     render() {
-        if(!this.state.loggedIn && this.state.url !== undefined) {
+        if(!this.state.loggedIn || this.state.url === undefined) {
             return (
                 <LibraryProvider loggedIn={this.state.loggedIn}>
                     <Navbar loggedIn={this.state.loggedIn} changeLogin={this.changeLogin} spotifyURL={this.state.url}/>

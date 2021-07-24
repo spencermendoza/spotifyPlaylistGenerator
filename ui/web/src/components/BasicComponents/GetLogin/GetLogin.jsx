@@ -29,7 +29,7 @@ const GetLogin = ({changeLogin, spotifyURL}) => {
     }
 
     const waitForURL = () => {
-        if (url === 'none') {
+        if (url === undefined) {
             return (<p>We are generating your sign in link now</p>)
         } else {
             return (
