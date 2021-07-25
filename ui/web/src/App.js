@@ -30,6 +30,7 @@ class App extends Component {
         this.setState({
             url: url,
         });
+        // console.log('the url: ', url)
     }
 
     changeLogin = () => {

@@ -16,7 +16,7 @@ const GetLogin = ({changeLogin, spotifyURL}) => {
         var width = 450,
             height = 730;
         let features = 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height
-        newWindow = window.open(url, 'Spotify', features);
+        newWindow = window.open(spotifyURL, 'Spotify', features);
 
 
         let timer = setInterval(function() {
