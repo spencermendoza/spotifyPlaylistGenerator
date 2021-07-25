@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 
 const client_id = '56cba1007de442ce9f5b05ffc57b1d96'; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+const redirect_uri = 'https://mendoza-playlist.herokuapp.com//callback'; // Your redirect uri
 
 //session details
 var accessToken = '';
