@@ -19,15 +19,15 @@ const PlaylistMaker = () => {
 
     const { createPlaylist } = useContext(LibraryContext);
 
-    useEffect(() => {
-        setWorkingList(artistList);
-    }, [artistList]);
+    // useEffect(() => {
+    //     setWorkingList(artistList);
+    // }, [artistList]);
 
     const playlistNameRef = useRef(null);
 
     //literally just to toggle the display mode when createOption is set to 'genre'
     const [display, setDisplay] = useState('default-genre');
-    const [workingList, setWorkingList] = useState(artistList)
+    // const [workingList, setWorkingList] = useState(artistList)
 
     //works with the display state value above to toggle
     //back and forth the display mode when creating by genre
