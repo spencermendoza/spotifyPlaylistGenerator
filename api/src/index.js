@@ -20,11 +20,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('build'));
-// }
-// app.use(express.static('build'));
-
   // Add headers
 app.use(function (req, res, next) {
 
@@ -44,10 +39,6 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-
-// app.get('*', function(req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// })
 
 app.get('/login', function(req, res) {
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
@@ -97,6 +88,17 @@ app.post('/newplaylist', async function(req, res) {
   let newPlaylist = await apiRequests.addToPlaylist(apiAuth.showToken(), answer.id, trackList);
   console.log('newPlaylist: ', newPlaylist)
 });
+
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+}
+
+app.use(express.static('ui/web/build'));
+
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 
 app.get('/', (req, res) => {res.send('Hello from Express!')});
 
