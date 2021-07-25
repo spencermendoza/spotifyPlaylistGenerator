@@ -29,7 +29,7 @@ class LibraryProvider extends Component {
         console.log('getting your music now');
         let options = {
             method: 'get',
-            url: 'http://localhost:8888/library',
+            url: 'https://mendoza-playlist.herokuapp.com/library',
         };
         return axios(options);
     }
@@ -39,7 +39,7 @@ class LibraryProvider extends Component {
         console.log('getting user info now')
         let options = {
             method: 'get',
-            url: 'http://localhost:8888/userinfo',
+            url: 'https://mendoza-playlist.herokuapp.com/userinfo',
         };
         return axios(options);
     }
@@ -59,7 +59,7 @@ class LibraryProvider extends Component {
         console.log('just checking the array: ', array);
         axios({
             method: 'post',
-            url: 'http://localhost:8888/newplaylist',
+            url: 'https://mendoza-playlist.herokuapp.com/newplaylist',
             data: {
                 trackList: array,
                 playlistName: playlistName,

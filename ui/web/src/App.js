@@ -19,7 +19,7 @@ class App extends Component {
         async function getURL() {
             const loginResponse = await axios({
                 method: 'get',
-                url: 'http://localhost:8888/login',
+                url: 'https://mendoza-playlist.herokuapp.com/login',
                 withCredentials: true,
             });
 
