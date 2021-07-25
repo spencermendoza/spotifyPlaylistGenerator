@@ -40,6 +40,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('/', (req, res) => {res.send('Hello from Express!')});
+
 app.get('/login', function(req, res) {
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
   res.clearCookie();
@@ -89,18 +91,15 @@ app.post('/newplaylist', async function(req, res) {
   console.log('newPlaylist: ', newPlaylist)
 });
 
-
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
+
+  app.use(express.static('ui/web/build'));
+  
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  })
+  
 }
-
-app.use(express.static('ui/web/build'));
-
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
-
-app.get('/', (req, res) => {res.send('Hello from Express!')});
 
 
 
