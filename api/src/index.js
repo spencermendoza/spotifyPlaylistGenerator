@@ -40,7 +40,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {res.send('Hello from Express!')});
+// app.get('/', (req, res) => {res.send('Hello from Express!')});
+console.log('process: ', process.env.NODE_ENV)
 
 app.get('/login', function(req, res) {
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
