@@ -15,6 +15,22 @@ class LibraryProvider extends Component {
         ],
         display: 'Base',
         loggedIn: this.props.loggedIn,
+        api: '',
+    }
+
+    componentDidMount() {
+        if (process.env.NODE_ENV === 'development') {
+            console.log('this is the development build ', process.env.NODE_ENV)
+            this.setState({
+                api: 'http://localhost:8888/',
+            })
+        } else if (process.env.NODE_ENV === 'production') {
+            this.setState({
+                api: 'mendoza-playlist.herokuapp.com/',
+            })
+        } else {
+            console.log('there was some sort of error determining if this is prod or dev build')
+        }
     }
 
     startup = async () => {
@@ -29,7 +45,7 @@ class LibraryProvider extends Component {
         console.log('getting your music now');
         let options = {
             method: 'get',
-            url: 'https://mendoza-playlist.herokuapp.com/library',
+            url: this.state.api + 'library',
         };
         return axios(options);
     }

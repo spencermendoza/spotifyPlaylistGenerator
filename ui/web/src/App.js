@@ -17,9 +17,17 @@ class App extends Component {
     async componentDidMount() {
         let url;
         async function getURL() {
+            let api = '';
+            if (process.env.NODE_ENV === 'development') {
+                api = 'http://localhost:8888/login';
+            } else if (process.env.NODE_ENV === 'production') {
+                api = 'https://mendoza-playlist.herokuapp.com/login'
+            } else {
+                console.log('there was some sort of error determining if this is a prod or dev build in app.js')
+            }
             const loginResponse = await axios({
                 method: 'get',
-                url: 'https://mendoza-playlist.herokuapp.com/login',
+                url: api,
                 withCredentials: true,
             });
 
@@ -30,7 +38,6 @@ class App extends Component {
         this.setState({
             url: url,
         });
-        // console.log('the url: ', url)
     }
 
     changeLogin = () => {
