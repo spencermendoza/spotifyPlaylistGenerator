@@ -38,7 +38,7 @@ class App extends Component {
         this.setState({
             url: url,
         });
-        console.log('returned url: ', this.state.url)
+        // console.log('returned url: ', this.state.url)
     }
 
     changeLogin = () => {

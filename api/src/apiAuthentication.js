@@ -103,8 +103,7 @@ async function getAuthDetails(req) {
             },
         };
 
-        console.log('authOptions: ', authOptions)
-        // console.log('client_id: ', client_secret, '--------------------------------')
+        // console.log('authOptions: ', authOptions)
 
         let response = await axios(authOptions).catch(error => {
             if (error) {
