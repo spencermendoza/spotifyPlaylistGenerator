@@ -1,25 +1,24 @@
 require('dotenv').config();
 var querystring = require('querystring');
 const axios = require('axios');
-const { response } = require('express');
-var request = require('request');
-// var rp = require('request-promise');
-const cors = require('cors');
-var cookieParser = require('cookie-parser');
-const path = require('path');
-// const { get } = require('request-promise');
+var mongo = require('./databaseFunctions');
+const { AutoEncryptionLoggerLevel } = require('mongodb');
+// const { response } = require('express');
+// var request = require('request');
+// const cors = require('cors');
+// var cookieParser = require('cookie-parser');
+// const path = require('path');
 
 const client_id = '56cba1007de442ce9f5b05ffc57b1d96'; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your secret
 const redirect_uri = prodOrDev(); //your redirect_uri
-// console.log('client_secret: ', process.env.STUPID)
 
 function prodOrDev() {
     if (process.env.NODE_ENV === 'development') {
-        console.log('this is a dev env')
+        console.log('---------------------this is a dev env-------------------')
         return 'http://localhost:8888/callback';
     } else if (process.env.NODE_ENV === 'production') {
-        console.log('this is a prod env')
+        console.log('-----------------------this is a prod env--------------------')
         return 'https://mendoza-playlist.herokuapp.com/callback';
     } else {
         console.log('there was an error determining if this is a prod or dev env in apiAuth')
@@ -63,7 +62,6 @@ function getLoginURL() {
         url: url,
     }
 
-    console.log('these are the return options: ', returnOptions)
     return returnOptions;
 };
 
@@ -110,15 +108,22 @@ async function getAuthDetails(req) {
                 console.log('there was an error in apiAuth: ', error)
             }
         });
-        console.log('apiAuth response: ', response)
-        accessToken = response.data.access_token;
-        refreshToken = response.data.refresh_token;
+        
+        var userDetails = {
+            userId: '',
+            accessToken: '',
+            refreshToken: '',
+            cookie: '',
+        }
+        userDetails.accessToken = response.data.access_token;
+        // console.log('this is the access token in apiAuth: ', response.data.access_token);
+        userDetails.refreshToken = response.data.refresh_token;
 
         let getUserOptions = {
             method: 'get',
             url: 'https://api.spotify.com/v1/me',
             headers: {
-                'Authorization': 'Bearer ' + accessToken,
+                'Authorization': 'Bearer ' + userDetails.accessToken,
             },
         }
 
@@ -127,8 +132,10 @@ async function getAuthDetails(req) {
                 console.log('the other shit worked but now I cant get user options: ', error);
             }
         })
-
+        userDetails.userId = returnedUser.data.href;
+        userDetails.cookie = state;
         user = returnedUser.data;
+        mongo.doesUserExist(userDetails);
         return user;
     }
 }
@@ -137,8 +144,15 @@ function showToken() {
     return accessToken;
 }
 
+async function authenticate(cookie) {
+    let token = await mongo.getToken(cookie);
+    // console.log('this is the token returned by mongo: ', token)
+    return token;
+}
+
 module.exports = {
     getLoginURL: getLoginURL,
     getAuthDetails: getAuthDetails,
     showToken: showToken,
+    authenticate: authenticate,
 }

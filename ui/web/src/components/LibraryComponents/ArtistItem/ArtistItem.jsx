@@ -27,13 +27,11 @@ const ArtistItem = ({artist}) => {
     //and also determines if there are images on the artist object
     //and if not it sets the image to the Spotify logo
     const formatArtist = () => {
-        console.log('music: ', music)
         let num = 0;
         music.forEach(album => {
             num = num + album.tracks.length;
         })
         setNumOfTracks(num)
-        console.log(numOfTracks)
         if (images.length === 0) {
             images.push({url: icon});
         }

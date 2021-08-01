@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const LibraryContext = React.createContext();
 const { Provider, Consumer } = LibraryContext;
@@ -35,10 +36,12 @@ class LibraryProvider extends Component {
 
     startup = async () => {
         console.log('api: ', this.state.api)
+        console.log('cookies: ', document.cookie)
         let music = await this.getMusic();
         let user = await this.getUser();
         this.setContextState('artistLibrary', music.data.sort((a, b) => (a.name > b.name) ? 1 : -1));
         this.setContextState('user', user.data)
+        console.log('user: ', this.state.user)
     }
 
     //axios request to get music
@@ -59,7 +62,6 @@ class LibraryProvider extends Component {
             method: 'get',
             url: this.state.api + 'userinfo',
         };
-        console.log('user url: ', options.url)
         return axios(options);
     }
 

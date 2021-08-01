@@ -15,8 +15,9 @@ var apiRequests = require('./apiRequests');
 var libraryFormatter = require('./formatLibrary.js');
 
 var app = express();
-app.use(cors());
+
 app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -39,22 +40,21 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-
-// app.get('/', (req, res) => {res.send('Hello from Express!')});
-console.log('process: ', process.env.NODE_ENV)
+app.get('/', (req, res) => {res.send('Hello from Express!')});
+// console.log('process: ', process.env.NODE_ENV)
 
 app.get('/login', function(req, res) {
   console.log('hitting login endpoint')
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
   res.clearCookie();
   res.cookie(stateKey, returnedState);
+  console.log('setting cookie....', stateKey, returnedState)
   res.send({body: url});
 });
 
 app.get('/callback', async function(req, res) {
   console.log('received callback from spotify API')
   console.log('referencing api auth...');
-  // console.log('from callback endpoint, req: ', req)
   let user = await apiAuth.getAuthDetails(req);
   if (user === 'state_mismatch') {
     res.redirect('/#' + 
@@ -62,42 +62,47 @@ app.get('/callback', async function(req, res) {
         error: 'state_mismatch'
       }));
   } else {
+    // console.log('user: ', user)
     res.send(user);
   }
 });
 
-app.get('/userinfo', function(req, res) {
+app.get('/userinfo', async function(req, res) {
   console.log('should be getting user info now')
-  apiRequests.getData(apiAuth.showToken(), 'user').then(response => {
+  let token = await apiAuth.authenticate(req.cookies.spotify_auth_state)
+  apiRequests.getData(token, 'user').then(response => {
     userInfo = response;
       res.send(userInfo);
     });
 });
 
-app.get('/playlists', function(req, res) {
-    apiRequests.getData(apiAuth.showToken(), 'playlists').then(response => {
+app.get('/playlists', async function(req, res) {
+  let token = await apiAuth.authenticate(req.cookies.spotify_auth_state)
+    apiRequests.getData(token, 'playlists').then(response => {
       res.send(response);
     });
 });
 
 app.get('/library', async function(req, res) {
-  let library = await apiRequests.getData(apiAuth.showToken(), 'library');
-  let formattedLibrary = await libraryFormatter.formatLibrary(library.items);
+  let token = await apiAuth.authenticate(req.cookies.spotify_auth_state)
+  let library = await apiRequests.getData(token, 'library');
+  let formattedLibrary = await libraryFormatter.formatLibrary(library.items, token);
   res.send(formattedLibrary);
 });
 
 app.post('/newplaylist', async function(req, res) {
+  let token = await apiAuth.authenticate(req.cookies.spotify_auth_state)
   let trackList = req.body.trackList;
   let playlistName = req.body.playlistName;
   let userId = req.body.user;
-  let answer = await apiRequests.createPlaylist(apiAuth.showToken(), playlistName, userId);
-  let newPlaylist = await apiRequests.addToPlaylist(apiAuth.showToken(), answer.id, trackList);
+  let answer = await apiRequests.createPlaylist(token, playlistName, userId);
+  let newPlaylist = await apiRequests.addToPlaylist(token, answer.id, trackList);
   console.log('newPlaylist: ', newPlaylist)
 });
 
 if (process.env.NODE_ENV === 'production') {
 
-  app.use(express.static('ui/web/build'));
+  // app.use(express.static('ui/web/build'));
   
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -112,5 +117,5 @@ if (process.env.NODE_ENV === 'production') {
 
 
 
-console.log('listening on port 8888');
+// console.log('listening on port 8888');
 app.listen(process.env.PORT || 8888);

@@ -8,13 +8,13 @@ var apiRequests = require('./apiRequests');
 //FORMATTING LIBRARY
 //takes the library returned from axios call in componentDidMount and formats it to
 //what I need. Will call several functions within.
-async function formatLibrary (preLibrary) {
+async function formatLibrary (preLibrary, token) {
     let workingLibrary = preLibrary;
     // console.log('am i getting the data tho: ', workingLibrary)
 
     //parses array and returns array of artist objects
     //will be list of artists with no albums
-    let artistListOne =  await getArtists(workingLibrary);
+    let artistListOne =  await getArtists(workingLibrary, token);
   
     //parses library array and returns array of album objects
     let albumList = getAlbums(preLibrary);
@@ -29,7 +29,7 @@ async function formatLibrary (preLibrary) {
 //accepts an array of track objects and creates a list of the artist objects 
 //within each track, then runs that list through formatArtists to format each obj
 //then returns the formatted list
-async function getArtists (library) {
+async function getArtists (library, token) {
 
     let theseArtists = [];
     let libLength = library.length;
@@ -51,7 +51,7 @@ async function getArtists (library) {
     //gets all the artist id's from the above list and makes
     //axios request on each one, pulls the genres from each artist
     //and adds them to the artist list. returns the updated list
-    let officialArtists =  await getGenres(uniqueArtists);
+    let officialArtists =  await getGenres(uniqueArtists, token);
     let artistList = officialArtists.map(artist => createArtistObject(artist));
     return artistList;
 }
@@ -83,7 +83,7 @@ return tempAlbumList;
 
 }
 
-async function getGenres (array) {
+async function getGenres (array, token) {
     console.log('getGenres running...')
 
     let artistAPIList = [];
@@ -100,7 +100,7 @@ async function getGenres (array) {
 
         let splicedArray = artistArray.splice(0, artistChunk);
 
-        let artists = await apiRequests.getMultiple(apiAuth.showToken(), splicedArray, 'artists');
+        let artists = await apiRequests.getMultiple(token, splicedArray, 'artists');
         artists.artists.forEach(artist => {
             artistAPIList.push(artist);
         })

@@ -11,6 +11,7 @@ class App extends Component {
         this.state = {
             url: undefined,
             loggedIn: false,
+            cookie: '',
         };
     }
 
@@ -31,6 +32,7 @@ class App extends Component {
                 withCredentials: true,
             });
 
+            // console.log('returned data: ', loginResponse)
             return loginResponse.data.body;
         };
         console.log('running getURL')
@@ -38,7 +40,6 @@ class App extends Component {
         this.setState({
             url: url,
         });
-        // console.log('returned url: ', this.state.url)
     }
 
     changeLogin = () => {
