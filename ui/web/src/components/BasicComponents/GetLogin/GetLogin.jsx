@@ -17,12 +17,14 @@ const GetLogin = ({changeLogin, spotifyURL}) => {
             height = 730;
         let features = 'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height
         newWindow = window.open(spotifyURL, 'Spotify', features);
+        console.log('this is the url I am opening: ', spotifyURL)
 
 
         let timer = setInterval(function() {
             if (newWindow.closed) {
                 clearInterval(timer);
                 changeLogin();
+                console.log('window closed')
                 startup();
             }
         }, 1000);

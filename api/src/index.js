@@ -44,6 +44,7 @@ app.use(function (req, res, next) {
 console.log('process: ', process.env.NODE_ENV)
 
 app.get('/login', function(req, res) {
+  console.log('hitting login endpoint')
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
   res.clearCookie();
   res.cookie(stateKey, returnedState);
@@ -51,7 +52,9 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/callback', async function(req, res) {
+  console.log('received callback from spotify API')
   console.log('referencing api auth...');
+  // console.log('from callback endpoint, req: ', req)
   let user = await apiAuth.getAuthDetails(req);
   if (user === 'state_mismatch') {
     res.redirect('/#' + 

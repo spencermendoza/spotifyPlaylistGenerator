@@ -1,27 +1,30 @@
 require('dotenv').config();
 var querystring = require('querystring');
 const axios = require('axios');
-const { response } = require('express');var request = require('request');
+const { response } = require('express');
+var request = require('request');
 // var rp = require('request-promise');
 const cors = require('cors');
 var cookieParser = require('cookie-parser');
+const path = require('path');
 // const { get } = require('request-promise');
 
 const client_id = '56cba1007de442ce9f5b05ffc57b1d96'; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'; //your redirect_uri
+const redirect_uri = prodOrDev(); //your redirect_uri
+// console.log('client_secret: ', process.env.STUPID)
 
-// function prodOrDev() {
-//     if (process.env.NODE_ENV === 'development') {
-//         console.log('this is a dev env')
-//         return 'http://localhost:8888/callback';
-//     } else if (process.env.NODE_ENV === 'production') {
-//         console.log('this is a prod env')
-//         return 'https://mendoza-playlist.herokuapp.com/callback';
-//     } else {
-//         console.log('there was an error determining if this is a prod or dev env in apiAuth')
-//     }
-// };
+function prodOrDev() {
+    if (process.env.NODE_ENV === 'development') {
+        console.log('this is a dev env')
+        return 'http://localhost:8888/callback';
+    } else if (process.env.NODE_ENV === 'production') {
+        console.log('this is a prod env')
+        return 'https://mendoza-playlist.herokuapp.com/callback';
+    } else {
+        console.log('there was an error determining if this is a prod or dev env in apiAuth')
+    }
+};
 
 //session details
 var accessToken = '';
@@ -60,6 +63,7 @@ function getLoginURL() {
         url: url,
     }
 
+    console.log('these are the return options: ', returnOptions)
     return returnOptions;
 };
 
@@ -95,15 +99,19 @@ async function getAuthDetails(req) {
             data: form,
             headers: {
                 'Content-Type':'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
+                'Authorization':'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
             },
         };
+
+        console.log('authOptions: ', authOptions)
+        // console.log('client_id: ', client_secret, '--------------------------------')
 
         let response = await axios(authOptions).catch(error => {
             if (error) {
                 console.log('there was an error in apiAuth: ', error)
             }
         });
+        console.log('apiAuth response: ', response)
         accessToken = response.data.access_token;
         refreshToken = response.data.refresh_token;
 

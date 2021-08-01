@@ -34,6 +34,7 @@ class LibraryProvider extends Component {
     }
 
     startup = async () => {
+        console.log('api: ', this.state.api)
         let music = await this.getMusic();
         let user = await this.getUser();
         this.setContextState('artistLibrary', music.data.sort((a, b) => (a.name > b.name) ? 1 : -1));
@@ -47,6 +48,7 @@ class LibraryProvider extends Component {
             method: 'get',
             url: this.state.api + 'library',
         };
+        console.log('music url: ', options.url)
         return axios(options);
     }
 
@@ -55,8 +57,9 @@ class LibraryProvider extends Component {
         console.log('getting user info now')
         let options = {
             method: 'get',
-            url: 'https://mendoza-playlist.herokuapp.com/userinfo',
+            url: this.state.api + 'userinfo',
         };
+        console.log('user url: ', options.url)
         return axios(options);
     }
 
