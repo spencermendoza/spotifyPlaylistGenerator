@@ -28,7 +28,7 @@ class LibraryProvider extends Component {
         } else if (process.env.NODE_ENV === 'production') {
             console.log('this is the production build ')
             this.setState({
-                api: 'mendoza-playlist.herokuapp.com/',
+                api: 'https://mendoza-playlist.herokuapp.com/',
             })
         } else {
             console.log('there was some sort of error determining if this is prod or dev build')
