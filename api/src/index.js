@@ -96,7 +96,7 @@ app.post('/newplaylist', async function(req, res) {
   let answer = await apiRequests.createPlaylist(token, playlistName, userId);
   await apiRequests.addToPlaylist(token, answer.id, trackList);
   console.log('newPlaylist: ', answer)
-  res.send(answer.uri);
+  res.send(answer.external_urls.spotify);
 });
 
 if (process.env.NODE_ENV === 'production') {
