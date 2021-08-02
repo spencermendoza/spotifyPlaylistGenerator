@@ -101,7 +101,7 @@ app.post('/newplaylist', async function(req, res) {
 
 if (process.env.NODE_ENV === 'production') {
 
-  app.use(express.static('../../ui/web/build'));
+  app.use(express.static('../ui/web/build'));
   
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
