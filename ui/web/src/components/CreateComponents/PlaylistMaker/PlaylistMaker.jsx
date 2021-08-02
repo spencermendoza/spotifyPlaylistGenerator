@@ -63,7 +63,8 @@ const PlaylistMaker = () => {
         } else {
             let trackURIs = pullURIFromTracks(trackList);
             let playlistURL =  await createPlaylist(trackURIs, name);
-            changePlaylistLink(playlistURL);
+            console.log('playlistURL: ', playlistURL)
+            changePlaylistLink(playlistURL.data);
             setCreateOption('success');
         }
     }

@@ -92,7 +92,8 @@ class LibraryProvider extends Component {
             }
         }
         console.log(document.cookie)
-        return await axios(options);
+        let url = await axios(options);
+        return url;
     }
 
     render() {

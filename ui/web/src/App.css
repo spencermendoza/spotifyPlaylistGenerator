@@ -260,6 +260,11 @@ Create
     justify-content: center;
 }
 
+.success {
+    width: 20%;
+    margin: 10%;
+}
+
 .createPage p {
     width: 40%;
     margin: 1% auto 0 auto;

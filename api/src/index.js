@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 //   // Pass to next layer of middleware
   next();
 });
-app.get('/', (req, res) => {res.send('Hello from Express!')});
+// app.get('/', (req, res) => {res.send('Hello from Express!')});
 // console.log('process: ', process.env.NODE_ENV)
 
 app.get('/login', function(req, res) {
@@ -101,7 +101,7 @@ app.post('/newplaylist', async function(req, res) {
 
 if (process.env.NODE_ENV === 'production') {
 
-  app.use(express.static('../ui/web/build'));
+  app.use(express.static('ui/web/build'));
   
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));

@@ -7,7 +7,14 @@ const Create = () => {
 
     let { createOption, playlistLink } = useContext(CreateContext);
 
-    
+    const openPlaylist = () => {
+        window.open(playlistLink, 'Spotify');
+    }
+
+    const instructions = () => {
+        return <h2 className='instructions'>On this page, you can select as many {createOption}s as you like, and the app will automatically add them to your list of selected {createOption}s. 
+            When you are done selecting, click the "Show Playlist" button below to see all the songs that will be added to your playlist.</h2>
+    }
 
     //determines which createOption is selected and renders
     //appropriate component based on selection
@@ -35,8 +42,8 @@ const Create = () => {
         } else if (createOption === 'success') {
             return (
                 <div className = 'create'>
-                    <p>Congrats! You just created your playlist. Click the link below to view it in your browser.</p>
-                    <a href>{playlistLink}</a>
+                    <p className='success'>Congrats! You just created your playlist. Click the button to view it in your browser.</p>
+                    <button onClick={() => {openPlaylist()}}>View playlist</button>
                 </div>
             )
         } else {
@@ -53,6 +60,7 @@ const Create = () => {
         <div className='createPage'>
             <div className='createHead'>
                 <h1>Create a playlist</h1>
+                {instructions()}
                 <CreateSelections />
             </div>
             {displayCreateMenu()}
