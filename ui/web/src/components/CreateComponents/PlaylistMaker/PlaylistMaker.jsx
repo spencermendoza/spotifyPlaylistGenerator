@@ -8,6 +8,8 @@ const PlaylistMaker = () => {
 
     const {
         createOption,
+        setCreateOption,
+        changePlaylistLink,
         selectedList,
         artistList,
         trackList,
@@ -52,7 +54,7 @@ const PlaylistMaker = () => {
     }
 
     //starts the process of making a playlist.
-    const beginPlaylist = () => {
+    const beginPlaylist = async () => {
         let name = playlistNameRef.current.value;
         if (!name) {
             console.log('you need a name!')
@@ -60,7 +62,9 @@ const PlaylistMaker = () => {
             playlistNameRef.current.value = 'GIVE ME A NAME FIRST'
         } else {
             let trackURIs = pullURIFromTracks(trackList);
-            createPlaylist(trackURIs, name);
+            let playlistURL =  await createPlaylist(trackURIs, name);
+            changePlaylistLink(playlistURL);
+            setCreateOption('success');
         }
     }
 

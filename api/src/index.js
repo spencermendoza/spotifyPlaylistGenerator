@@ -17,27 +17,27 @@ var libraryFormatter = require('./formatLibrary.js');
 var app = express();
 
 app.use(cookieParser());
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
   // Add headers
 app.use(function (req, res, next) {
 
-  // Website you wish to allow to connect
+//   // Website you wish to allow to connect
   res.header('Access-Control-Allow-Origin', req.headers.origin);
 
-  // Request methods you wish to allow
+//   // Request methods you wish to allow
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-  // Request headers you wish to allow
+//   // Request headers you wish to allow
   res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
   res.header('Access-Control-Allow-Credentials', true);
 
-  // Pass to next layer of middleware
+//   // Pass to next layer of middleware
   next();
 });
 app.get('/', (req, res) => {res.send('Hello from Express!')});
@@ -48,7 +48,6 @@ app.get('/login', function(req, res) {
   var { stateKey, returnedState, url } = apiAuth.getLoginURL();
   res.clearCookie();
   res.cookie(stateKey, returnedState);
-  console.log('setting cookie....', stateKey, returnedState)
   res.send({body: url});
 });
 
@@ -62,7 +61,6 @@ app.get('/callback', async function(req, res) {
         error: 'state_mismatch'
       }));
   } else {
-    // console.log('user: ', user)
     res.send(user);
   }
 });
@@ -96,13 +94,14 @@ app.post('/newplaylist', async function(req, res) {
   let playlistName = req.body.playlistName;
   let userId = req.body.user;
   let answer = await apiRequests.createPlaylist(token, playlistName, userId);
-  let newPlaylist = await apiRequests.addToPlaylist(token, answer.id, trackList);
-  console.log('newPlaylist: ', newPlaylist)
+  await apiRequests.addToPlaylist(token, answer.id, trackList);
+  console.log('newPlaylist: ', answer)
+  res.send(answer.uri);
 });
 
 if (process.env.NODE_ENV === 'production') {
 
-  // app.use(express.static('ui/web/build'));
+  app.use(express.static('ui/web/build'));
   
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));

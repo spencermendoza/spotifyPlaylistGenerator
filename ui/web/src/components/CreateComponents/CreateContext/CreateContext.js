@@ -14,6 +14,7 @@ class CreateProvider extends Component {
             selectedList: [],
             artistList: [],
             trackList: [],
+            playlistLink: '',
         }
     }
 
@@ -185,6 +186,12 @@ class CreateProvider extends Component {
         return URIList;
     }
 
+    changePlaylistLink = (link) => {
+        this.setState({
+            playlistLink: link,
+        })
+    };
+
     render() {
         return (
             <Provider
@@ -204,6 +211,7 @@ class CreateProvider extends Component {
                     changeArtistOption: this.changeArtistOption,
                     pullURIFromTracks: this.pullURIFromTracks,
                     goBack: this.goBack,
+                    changePlaylistLink: this.changePlaylistLink,
                 }}
             >{this.props.children}</Provider>
         )

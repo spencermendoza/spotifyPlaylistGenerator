@@ -2,7 +2,7 @@ require('dotenv').config();
 var querystring = require('querystring');
 const axios = require('axios');
 var mongo = require('./databaseFunctions');
-const { AutoEncryptionLoggerLevel } = require('mongodb');
+// const { AutoEncryptionLoggerLevel } = require('mongodb');
 // const { response } = require('express');
 // var request = require('request');
 // const cors = require('cors');
@@ -26,9 +26,9 @@ function prodOrDev() {
 };
 
 //session details
-var accessToken = '';
-var refreshToken = '';
-var user = {};
+// var accessToken = '';
+// var refreshToken = '';
+// var user = {};
 var state = generateRandomString(16);  
 var scopes = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative user-library-read playlist-modify-public playlist-modify-private';
 

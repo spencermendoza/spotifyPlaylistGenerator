@@ -112,7 +112,6 @@ async function addToPlaylist(token, playlistId, trackList) {
 
 
     while (newTrackList.length > 0) {
-        console.log('newTrackList.length: ', newTrackList.length);
 
         let url = 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks';
         let tempTrackList;

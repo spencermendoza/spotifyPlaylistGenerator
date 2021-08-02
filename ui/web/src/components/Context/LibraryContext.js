@@ -21,11 +21,12 @@ class LibraryProvider extends Component {
 
     componentDidMount() {
         if (process.env.NODE_ENV === 'development') {
-            console.log('this is the development build ', process.env.NODE_ENV)
+            console.log('this is the development build ')
             this.setState({
                 api: 'http://localhost:8888/',
             })
         } else if (process.env.NODE_ENV === 'production') {
+            console.log('this is the production build ')
             this.setState({
                 api: 'mendoza-playlist.herokuapp.com/',
             })
@@ -50,6 +51,7 @@ class LibraryProvider extends Component {
         let options = {
             method: 'get',
             url: this.state.api + 'library',
+            withCredentials: true,
         };
         console.log('music url: ', options.url)
         return axios(options);
@@ -61,6 +63,7 @@ class LibraryProvider extends Component {
         let options = {
             method: 'get',
             url: this.state.api + 'userinfo',
+            withCredentials: true,
         };
         return axios(options);
     }
@@ -75,18 +78,21 @@ class LibraryProvider extends Component {
     //takes the array of artists and holds it for now
     //takes the playlist name and runs it through the api
     //to create a playlist with that name
-    createPlaylist = (array, playlistName) => {
+    createPlaylist = async (array, playlistName) => {
         console.log('i am about to create a playlist using this name: ', playlistName)
         console.log('just checking the array: ', array);
-        axios({
+        let options = {
             method: 'post',
-            url: 'https://mendoza-playlist.herokuapp.com/newplaylist',
+            url: this.state.api + 'newplaylist',
             data: {
                 trackList: array,
                 playlistName: playlistName,
                 user: this.state.user.id,
+                withCredentials: true,
             }
-        })
+        }
+        console.log(document.cookie)
+        return await axios(options);
     }
 
     render() {

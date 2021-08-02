@@ -26,11 +26,21 @@ async function doesUserExist(details) {
             refreshToken: details.refreshToken,
             cookie: details.cookie,
         }}
-    await db.updateOne(filter, updateDoc, options);
+        try {
+            await db.updateOne(filter, updateDoc, options);
+        } catch (error) {
+            console.log('there was an error updating the document: ', error)
+        }
 }
 
 async function getToken(query) {
-    let token = await db.findOne({cookie: query});
+    console.log('query: ', query)
+    let token = '';
+    try {
+        token = await db.findOne({cookie: query});
+    } catch (error) {
+        console.log('there was an error getting the token: ', error)
+    }
     // console.log('this should be the token: ', token)
     return token.accessToken;
 }

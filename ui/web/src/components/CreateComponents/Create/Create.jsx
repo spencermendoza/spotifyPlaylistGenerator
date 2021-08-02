@@ -5,7 +5,9 @@ import { CreateSelections, GenreList, PlaylistMaker, ArtistList} from '../..';
 
 const Create = () => {
 
-    let { createOption, } = useContext(CreateContext);
+    let { createOption, playlistLink } = useContext(CreateContext);
+
+    
 
     //determines which createOption is selected and renders
     //appropriate component based on selection
@@ -28,6 +30,13 @@ const Create = () => {
             return (
                 <div className='create'>
                     <PlaylistMaker />
+                </div>
+            )
+        } else if (createOption === 'success') {
+            return (
+                <div className = 'create'>
+                    <p>Congrats! You just created your playlist. Click the link below to view it in your browser.</p>
+                    <a href>{playlistLink}</a>
                 </div>
             )
         } else {

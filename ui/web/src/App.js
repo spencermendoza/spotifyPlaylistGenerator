@@ -32,10 +32,8 @@ class App extends Component {
                 withCredentials: true,
             });
 
-            // console.log('returned data: ', loginResponse)
             return loginResponse.data.body;
         };
-        console.log('running getURL')
         url = await getURL();
         this.setState({
             url: url,
