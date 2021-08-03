@@ -32,16 +32,16 @@ async function getData(token, dataQuery) {
     let options = createGetOptions(token, url);
     let data = await makeGetRequest(options);
     let response = data.data;
-    // if (response.next) {
-    //     while (response.next) {
-    //         console.log('there are still more items to retrieve')
-    //         url = response.next;
-    //         options = createGetOptions(token, url);
-    //         let newRequest = await makeGetRequest(options);
-    //         response.items = response.items.concat(newRequest.data.items);
-    //         response.next = newRequest.data.next;
-    //     };
-    // }
+    if (response.next) {
+        while (response.next) {
+            console.log('there are still more items to retrieve')
+            url = response.next;
+            options = createGetOptions(token, url);
+            let newRequest = await makeGetRequest(options);
+            response.items = response.items.concat(newRequest.data.items);
+            response.next = newRequest.data.next;
+        };
+    }
     return response;
 }
 
