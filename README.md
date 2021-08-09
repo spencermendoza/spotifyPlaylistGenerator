@@ -1,6 +1,6 @@
 # Spotify Playlist Generator
 
-This app allows the user to view their entire saved Spotify library, view all the genres present inside of their library, and generate custom playlists from within their library based on genres they selected.
+This app allows the user to view their entire saved Spotify library, view all the genres present inside of their library, and generate custom playlists from within their library based on genres they selected. I used React.js for the front-end of the project and Node and Express on the back-end. The Express serves static React assets to the user so I could avoid using more than one server for hosting. I also used MongoDB to store basic user information such as their Spotify username, the API token and refresh token, and a cookie that is saved to the browser which allows the app to be used by more than one user at a time without mixing up their data.
 
 # Instructions
 
